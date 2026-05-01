@@ -188,7 +188,7 @@ my_theme <- reactableTheme(
 )
 
 #while(TRUE){
-for(i in 1:3){
+for(i in 1:1){
   message(paste("Updating at", Sys.time()))
   
   # read fresh data from sheet_url
@@ -247,15 +247,14 @@ for(i in 1:3){
       data,
       pagination = FALSE,
       highlight = TRUE,
-      # Use the 'my_theme' you defined at the top of your script
       theme = my_theme, 
       columns = list(
         `Home +1 Change` = colDef(
           html = TRUE, 
-          name = "Home Goal..", # Shorter header for mobile
+          name = "Home Goal..",
           align = "left",
           minWidth = 100,
-          style = list(background = "#b3d99a", fontWeight = "500") # Light Green highlight
+          style = list(background = "#eceef2") # Same grey as Fixture
         ),
         Fixture = colDef(
           name = "Score", 
@@ -263,12 +262,11 @@ for(i in 1:3){
           minWidth = 90,
           maxWidth = 120, 
           style = list(
-            background = "#eceef2", # Subtle grey to pop from the background
+            background = "#eceef2", 
             color = "#1f1820",
             fontWeight = "bold", 
             fontSize = "13px",
             whiteSpace = "nowrap",
-            # Updated borders to match your #1f1820 code
             borderLeft = "1px solid #1f1820", 
             borderRight = "1px solid #1f1820"
           )
@@ -278,7 +276,7 @@ for(i in 1:3){
           name = "Away Goal..", 
           align = "right",
           minWidth = 100,
-          style = list(background = "#f6d7d5", fontWeight = "500") # Light Red highlight
+          style = list(background = "#eceef2") # Same grey as Fixture
         )
       )
     )
