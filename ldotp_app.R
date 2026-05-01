@@ -250,7 +250,7 @@ for(i in 1:1){
       columns = list(
         `Home +1 Change` = colDef(
           html = TRUE, 
-          name = "Home Goal..",
+          name = "If Home Score Next..",
           align = "left",
           minWidth = 100,
           style = list(background = "#252628")
@@ -258,8 +258,8 @@ for(i in 1:1){
         Fixture = colDef(
           name = "Score", 
           align = "center",
-          minWidth = 90,
-          maxWidth = 120, 
+          minWidth = 180,
+          maxWidth = 200, 
           style = list(
             background = "#252628", 
             color = "#ffffff",
@@ -272,7 +272,7 @@ for(i in 1:1){
         ),
         `Away +1 Change` = colDef(
           html = TRUE, 
-          name = "Away Goal..", 
+          name = "If Away Score Next..", 
           align = "right",
           minWidth = 100,
           style = list(background = "#252628")
@@ -398,11 +398,11 @@ for(i in 1:1){
 
   try({
     # The "." tells Git to look at EVERYTHING in the folder (html and lib)
-    system("git add .") 
-    
+    system("git add .")
+
     # Commit only if there are changes (avoids errors if nothing changed)
     system('git commit -m "Auto-update scores" --no-verify')
-    
+
     # Push using our authenticated remote
     system("git push origin main --quiet")
   }, silent = FALSE)
