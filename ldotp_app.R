@@ -342,8 +342,13 @@ for(i in 1:3){
   htmltools::save_html(page, file = "prediction_scenarios.html", libdir = "lib")
 
   try({
-    system("git add prediction_scenarios.html lib/")
-    system('git commit -m "Auto-update" --no-verify')
+    # The "." tells Git to look at EVERYTHING in the folder (html and lib)
+    system("git add .") 
+    
+    # Commit only if there are changes (avoids errors if nothing changed)
+    system('git commit -m "Auto-update scores" --no-verify')
+    
+    # Push using our authenticated remote
     system("git push origin main --quiet")
   }, silent = FALSE)
 
