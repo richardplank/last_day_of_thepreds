@@ -167,7 +167,7 @@ check_major_changes <- function(live_st, scenario_st) {
 }
 
 #while(TRUE){
-for(i in 1:3)
+for(i in 1:3){
   message(paste("Updating at", Sys.time()))
   
   # read fresh data from sheet_url
@@ -346,7 +346,7 @@ for(i in 1:3)
     
     # Push
     system("git push origin main --quiet")
-  }, silent = TRUE)
+  }, silent = FALSE)
 
   message(paste("Successfully updated at", Sys.time()))
 
