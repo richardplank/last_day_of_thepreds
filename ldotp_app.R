@@ -342,20 +342,15 @@ for(i in 1:3){
   htmltools::save_html(page, file = "prediction_scenarios.html", libdir = "lib")
 
   try({
-    # Add the HTML AND the dependencies folder
-    system("git add prediction_scenarios.html lib/") 
-    
-    # Commit
-    system('git commit -m "Auto-update scores and assets" --no-verify')
-    
-    # Push
+    system("git add prediction_scenarios.html lib/")
+    system('git commit -m "Auto-update" --no-verify')
     system("git push origin main --quiet")
   }, silent = FALSE)
 
   message(paste("Successfully updated at", Sys.time()))
 
   # check the sheet every 60 seconds
-  Sys.sleep(60)
+  Sys.sleep(10)
 
 }
 
