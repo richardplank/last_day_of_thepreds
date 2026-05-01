@@ -368,7 +368,7 @@ for(i in 1:1){
   )
   
   # --- 4. Save to File ---
-  htmltools::save_html(page, file = "prediction_scenarios.html", libdir = "lib")
+  htmltools::save_html(page, file = "live.html", libdir = "lib")
 
   try({
     # The "." tells Git to look at EVERYTHING in the folder (html and lib)
