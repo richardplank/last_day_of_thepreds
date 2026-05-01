@@ -9,6 +9,10 @@ require(gargle)
 require(reactable)
 require(htmltools)
 
+# system git IDs
+system('git config user.email "richardplank@hotmail.com"')
+system('git config user.name "richardplank"')
+
 # De-authorize public sheet
 gs4_deauth()
 
