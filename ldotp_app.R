@@ -170,6 +170,23 @@ check_major_changes <- function(live_st, scenario_st) {
   if (length(changes) == 0) return("-") else return(paste(changes, collapse = "<br>"))
 }
 
+# Define the page palette
+my_theme <- reactableTheme(
+  backgroundColor = "#f4f5f7",     # Your light grey background
+  borderColor = "#1f1820",         # Your dark border/line color
+  stripedColor = "#eceef2",       # Slightly darker grey for alternating rows
+  headerStyle = list(
+    backgroundColor = "#1f1820",   # Dark background for headers
+    color = "#ffffff",             # White text for header contrast
+    borderBottom = "2px solid #1f1820"
+  ),
+  cellStyle = list(
+    color = "#1f1820",             # Dark grey text for readability
+    borderBottom = "1px solid #1f1820"
+  ),
+  searchInputStyle = list(width = "100%")
+)
+
 #while(TRUE){
 for(i in 1:3){
   message(paste("Updating at", Sys.time()))
@@ -230,38 +247,38 @@ for(i in 1:3){
       data,
       pagination = FALSE,
       highlight = TRUE,
-      theme = reactableTheme(
-        backgroundColor = "#1a1a1a",
-        color = "#f0f0f0",
-        headerStyle = list(background = "#333", color = "#fff", fontFamily = "Montserrat")
-      ),
+      # Use the 'my_theme' you defined at the top of your script
+      theme = my_theme, 
       columns = list(
         `Home +1 Change` = colDef(
           html = TRUE, 
           name = "Home Goal..", # Shorter header for mobile
           align = "left",
-          minWidth = 100 # Allows it to grow
+          minWidth = 100,
+          style = list(background = "#b3d99a", fontWeight = "500") # Light Green highlight
         ),
         Fixture = colDef(
           name = "Score", 
           align = "center",
-          # Increased from 100 to 120 to prevent wrapping on desktop
           minWidth = 90,
           maxWidth = 120, 
           style = list(
-            background = "#222", 
+            background = "#eceef2", # Subtle grey to pop from the background
+            color = "#1f1820",
             fontWeight = "bold", 
-            fontSize = "13px", # Slightly smaller font to keep it on one line
-            whiteSpace = "nowrap", # Force it to stay on one line
-            borderLeft = "1px solid #444", 
-            borderRight = "1px solid #444"
+            fontSize = "13px",
+            whiteSpace = "nowrap",
+            # Updated borders to match your #1f1820 code
+            borderLeft = "1px solid #1f1820", 
+            borderRight = "1px solid #1f1820"
           )
         ),
         `Away +1 Change` = colDef(
           html = TRUE, 
           name = "Away Goal..", 
           align = "right",
-          minWidth = 100
+          minWidth = 100,
+          style = list(background = "#f6d7d5", fontWeight = "500") # Light Red highlight
         )
       )
     )
@@ -355,7 +372,7 @@ for(i in 1:3){
   message(paste("Successfully updated at", Sys.time()))
 
   # check the sheet every 60 seconds
-  Sys.sleep(10)
+  Sys.sleep(90)
 
 }
 
