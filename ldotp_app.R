@@ -172,19 +172,18 @@ check_major_changes <- function(live_st, scenario_st) {
 
 # Define the page palette
 my_theme <- reactableTheme(
-  backgroundColor = "#f4f5f7",     # Your light grey background
-  borderColor = "#1f1820",         # Your dark border/line color
-  stripedColor = "#eceef2",       # Slightly darker grey for alternating rows
+  backgroundColor = "#1e1f21",       # Dark charcoal background
+  borderColor = "#f0f0f0",           # Off-white lines/borders
+  stripedColor = "#2a2b2d",         # Slightly lighter dark for rows
   headerStyle = list(
-    backgroundColor = "#1f1820",   # Dark background for headers
-    color = "#ffffff",             # White text for header contrast
-    borderBottom = "2px solid #1f1820"
+    backgroundColor = "#1e1f21",
+    color = "#ffdc55",               # Mustard yellow for column headers
+    borderBottom = "2px solid #f0f0f0"
   ),
   cellStyle = list(
-    color = "#1f1820",             # Dark grey text for readability
-    borderBottom = "1px solid #1f1820"
-  ),
-  searchInputStyle = list(width = "100%")
+    color = "#f0f0f0",               # Off-white text for body
+    borderBottom = "1px solid #f0f0f0"
+  )
 )
 
 #while(TRUE){
@@ -254,7 +253,7 @@ for(i in 1:1){
           name = "Home Goal..",
           align = "left",
           minWidth = 100,
-          style = list(background = "#eceef2") # Same grey as Fixture
+          style = list(background = "#252628")
         ),
         Fixture = colDef(
           name = "Score", 
@@ -262,13 +261,13 @@ for(i in 1:1){
           minWidth = 90,
           maxWidth = 120, 
           style = list(
-            background = "#eceef2", 
-            color = "#1f1820",
+            background = "#252628", 
+            color = "#ffffff",
             fontWeight = "bold", 
             fontSize = "13px",
             whiteSpace = "nowrap",
-            borderLeft = "1px solid #1f1820", 
-            borderRight = "1px solid #1f1820"
+            borderLeft = "1px solid #f0f0f0", 
+            borderRight = "1px solid #f0f0f0"
           )
         ),
         `Away +1 Change` = colDef(
@@ -276,7 +275,7 @@ for(i in 1:1){
           name = "Away Goal..", 
           align = "right",
           minWidth = 100,
-          style = list(background = "#eceef2") # Same grey as Fixture
+          style = list(background = "#252628")
         )
       )
     )
@@ -289,37 +288,52 @@ for(i in 1:1){
       tags$meta(attributes = list("http-equiv" = "refresh", "content" = "60")),
       tags$title("Live Prediction Scenarios"),
       tags$style(HTML("
-  /* Desktop / General Styles */
-  body { 
-    font-family: 'Montserrat', sans-serif; 
-    background-color: #121212; 
-    color: #f0f0f0; 
-    padding: 20px; 
-  }
-  .container { max-width: 900px; margin: auto; }
-  h1 { text-align: center; color: #00d1b2; font-weight: 700; }
-  h2 { color: #ffdd57; border-left: 5px solid #ffdd57; padding-left: 15px; }
-
-  .up { color: #afffba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
-  .down { color: #ffbaba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
-  .suffix { display: block; font-size: 0.75em; font-weight: 400; font-style: italic; opacity: 0.7; }
-
-  /* Mobile Styles (Portrait Mode) */
-  @media (max-width: 600px) {
-    body { padding: 5px; }
-    .container { width: 100%; }
-    h1 { font-size: 1.4em; }
-    h2 { font-size: 1.1em; padding-left: 10px; }
+      /* Desktop / General Styles */
+      body { 
+        font-family: 'Montserrat', sans-serif; 
+        background-color: #1e1f21; 
+        color: #f0f0f0; 
+        padding: 20px; 
+      }
+      .container { max-width: 900px; margin: auto; }
+      
+      /* Page Title - Now Mustard Yellow */
+      h1 { 
+        text-align: center; 
+        color: #ffdc55; 
+        font-weight: 800; 
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      /* Division Text - Mustard Yellow with the Left Border */
+      h2 { 
+        color: #ffdc55; 
+        border-left: 5px solid #ffdc55; 
+        padding-left: 15px; 
+        text-transform: uppercase;
+        font-size: 1.4em;
+      }
     
-    /* Shrink the text inside the table cells for mobile */
-    .rt-td { 
-      padding: 4px 2px !important; 
-      font-size: 11px !important; 
-    }
-    /* Hide the Up/Down arrows on very small screens to save space if needed */
-    /* .up::before, .down::before { content: ''; } */
-  }
-"))
+      /* Pastel Green/Red for the 'Change' text */
+      .up { color: #afffba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
+      .down { color: #ffbaba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
+      .suffix { display: block; font-size: 0.75em; font-weight: 400; font-style: italic; opacity: 0.7; }
+    
+      /* Mobile Styles (Portrait Mode) */
+      @media (max-width: 600px) {
+        body { padding: 5px; }
+        .container { width: 100%; }
+        h1 { font-size: 1.4em; }
+        h2 { font-size: 1.1em; padding-left: 10px; }
+        
+        /* Shrink the text inside the table cells for mobile */
+        .rt-td { 
+          padding: 4px 2px !important; 
+          font-size: 11px !important; 
+        }
+      }
+    "))
     ),
     tags$body(
       tags$div(class = "container",
