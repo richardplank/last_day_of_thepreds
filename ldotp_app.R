@@ -306,6 +306,21 @@ for(i in 1:1){
         letter-spacing: 1px;
       }
       
+      .footnote {
+        text-align: center;
+        color: #ffdc55; /* Mustard Yellow */
+        font-size: 0.8em;
+        font-weight: 600;
+        margin-top: 30px;
+        padding: 20px;
+        letter-spacing: 1px;
+        opacity: 0.8;
+      }
+      .footnote a {
+        color: #ffdc55;
+        text-decoration: underline;
+      }
+      
       /* Division Text - Mustard Yellow with the Left Border */
       h2 { 
         color: #ffdc55; 
@@ -337,8 +352,11 @@ for(i in 1:1){
     ),
     tags$body(
       tags$div(class = "container",
+               # Title and Timestamp
                tags$h1("Last Day of The Preds"),
-               tags$p(class = "update-time", paste("Last Updated:", format(Sys.time(), "%H:%M %d %b %Y"))),
+               tags$p(class = "update-time", 
+                      style = "text-align: center; font-size: 0.9em; opacity: 0.8;", 
+                      paste("Last Updated:", format(Sys.time(), "%H:%M %d %b %Y"))),
                
                # Division 1
                tags$div(class = "div-section",
@@ -362,6 +380,14 @@ for(i in 1:1){
                tags$div(class = "div-section",
                         tags$h2("Division 4"),
                         create_scenario_table(division_reports$Div4)
+               ),
+               
+               # The Single Footnote at the very bottom
+               tags$div(class = "footnote",
+                        style = "text-align: center; color: #ffdc55; font-size: 0.8em; font-weight: 600; margin-top: 40px; padding: 20px; letter-spacing: 1px;",
+                        "DON'T FORGET... ALWAYS REFER TO ",
+                        tags$a(href = "https://preds.co.uk", style = "color: #ffdc55; text-decoration: underline;", "PREDS.CO.UK"),
+                        " FOR OFFICIAL RANKINGS"
                )
       )
     )
