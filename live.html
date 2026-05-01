@@ -13,97 +13,116 @@
 <script src="lib/reactable-binding-0.4.5/reactable.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <meta attributes="refresh 60"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Live Prediction Scenarios</title>
   <style>
-      /* Desktop / General Styles */
-      body { 
-        font-family: 'Montserrat', sans-serif; 
-        background-color: #1e1f21; 
-        color: #f0f0f0; 
-        padding: 20px; 
-      }
-      .container { max-width: 900px; margin: auto; }
-      
-      /* Page Title - Now Mustard Yellow */
-      h1 { 
-        text-align: center; 
-        color: #ffdc55; 
-        font-weight: 800; 
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      
-      .footnote {
-        text-align: center;
-        color: #ffdc55; /* Mustard Yellow */
-        font-size: 0.8em;
-        font-weight: 600;
-        margin-top: 30px;
-        padding: 20px;
-        letter-spacing: 1px;
-        opacity: 0.8;
-      }
-      .footnote a {
-        color: #ffdc55;
-        text-decoration: underline;
-      }
-      
-      /* Division Text - Mustard Yellow with the Left Border */
-      h2 { 
-        color: #ffdc55; 
-        border-left: 5px solid #ffdc55; 
-        padding-left: 15px; 
-        text-transform: uppercase;
-        font-size: 1.4em;
-      }
-    
-      /* Pastel Green/Red for the 'Change' text */
-      .up { color: #afffba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
-      .down { color: #ffbaba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
-      .suffix { display: block; font-size: 0.75em; font-weight: 400; font-style: italic; opacity: 0.7; }
-    
-      /* Mobile Styles (Portrait Mode) */
-      @media (max-width: 600px) {
-        body { padding: 5px; }
-        .container { width: 100%; }
-        h1 { font-size: 1.4em; }
-        h2 { font-size: 1.1em; padding-left: 10px; }
+          /* Desktop / General Styles */
+          body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #1e1f21; 
+            color: #f0f0f0; 
+            padding: 20px; 
+          }
+          .container { max-width: 900px; margin: auto; }
+          
+          h1 { 
+            text-align: center; 
+            color: #ffdc55; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 2em;
+          }
+          
+          .footnote {
+            text-align: center;
+            color: #ffdc55;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 30px;
+            padding: 20px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+          }
+          .footnote a { color: #ffdc55; text-decoration: underline; }
+          
+          h2 { 
+            color: #ffdc55; 
+            border-left: 5px solid #ffdc55; 
+            padding-left: 15px; 
+            text-transform: uppercase;
+            font-size: 1.5em;
+          }
         
-        /* Shrink the text inside the table cells for mobile */
-        .rt-td { 
-          padding: 4px 2px !important; 
-          font-size: 11px !important; 
-        }
-      }
+          .up { 
+            color: #afffba; 
+            font-weight: bold; 
+            display: block; 
+            line-height: 1.0;  /* Reduced from 1.1 */
+            margin-bottom: 0px; /* Removed the 5px gap */
+          }
+          .down { 
+            color: #ffbaba; 
+            font-weight: bold; 
+            display: block; 
+            line-height: 1.0;  /* Reduced from 1.1 */
+            margin-bottom: 0px; /* Removed the 5px gap */
+          }
+          .suffix { 
+            display: block; 
+            font-size: 0.75em; 
+            font-weight: 400; 
+            font-style: italic; 
+            opacity: 0.7; 
+            line-height: 1.0; 
+            margin-top: 2px;   /* Small controlled gap just for the suffix */
+          }
+        
+          /* Mobile Styles (Portrait Mode) */
+          @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { width: 100%; }
+            h1 { font-size: 1.6em; }
+            h2 { font-size: 1.3em; padding-left: 10px; }
+            
+            /* INCREASED font size for mobile readability */
+            .rt-td { 
+              padding: 6px 0px !important; /* Taller rows for easier reading */
+              font-size: 12px;   /* Larger text */
+            }
+            .rt-th {
+              font-size: 11px !important;
+            }
+          }
     </style>
 </head>
 <html>
   <body>
     <div class="container">
       <h1>Last Day of The Preds</h1>
-      <p class="update-time" style="text-align: center; font-size: 0.9em; opacity: 0.8;">Last Updated: 13:06 01 May 2026</p>
+      <p class="update-time" style="text-align: center; font-size: 0.9em; opacity: 0.8;">Last Updated: 14:16 01 May 2026</p>
       <div class="div-section">
         <h2>Division 1</h2>
-        <div class="reactable html-widget html-fill-item" id="htmlwidget-6cb1c9ea286327275e0e" style="width:auto;height:auto;"></div>
-        <script type="application/json" data-for="htmlwidget-6cb1c9ea286327275e0e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","-","-","-","-","-","-","-","-","<span class='down'>R-Bot loses top spot<br><span class='suffix'> (only on alphabetical order)<\/span><\/span><br><span class='up'>Mrs S is Champion!<br><span class='suffix'> (only on alphabetical order)<\/span><\/span>"],"Fixture":["Leeds 0-0 Burnley","Brentford 0-0 West Ham","Newcastle 0-0 Brighton","Wolves 0-0 Sunderland","Arsenal 0-0 Fulham","Bournemouth 0-0 Palace","Man Utd 0-0 Liverpool","Villa 0-0 Spurs","Chelsea 0-0 Forest","Everton 0-0 Man City"],"Away +1 Change":["-","-","-","-","-","-","-","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Score Next..","type":"character","html":true,"minWidth":100,"align":"left","style":{"background":"#252628"}},{"id":"Fixture","name":"Score","type":"character","minWidth":180,"maxWidth":200,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"13px","whiteSpace":"nowrap","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Score Next..","type":"character","html":true,"minWidth":100,"align":"right","style":{"background":"#252628"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"84943a6cb64f0fcaabe838092546877c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+        <div class="reactable html-widget html-fill-item" id="htmlwidget-d84140116b3d78b89aaa" style="width:auto;height:auto;"></div>
+        <script type="application/json" data-for="htmlwidget-d84140116b3d78b89aaa">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","-","-","-","-","-","-","-","-","<span class='down'>R-Bot off the top<br><span class='suffix'> (only on alphabetical order)<\/span><\/span><br><span class='up'>Mrs S is Champion!<br><span class='suffix'> (only on alphabetical order)<\/span><\/span>"],"Fixture":["LEE 0-0 BUR","BRE 0-0 WHU","NEW 0-0 BHA","WOL 0-0 SUN","ARS 0-0 FUL","BOU 0-0 CRY","MNU 0-0 LIV","AVL 0-0 TOT","CHE 0-0 NFO","EVE 0-0 MNC"],"Away +1 Change":["-","-","-","-","-","-","-","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Scores..","type":"character","html":true,"minWidth":110,"align":"left","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}},{"id":"Fixture","name":"Score","type":"character","minWidth":75,"maxWidth":85,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"10px","whiteSpace":"nowrap","paddingLeft":"1px","paddingRight":"1px","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Scores..","type":"character","html":true,"minWidth":110,"align":"right","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"5fb79e3e702ea86b12e36d326468d494"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
       </div>
       <div class="div-section">
         <h2>Division 2</h2>
-        <div class="reactable html-widget html-fill-item" id="htmlwidget-5d91b3d89c8059ef5915" style="width:auto;height:auto;"></div>
-        <script type="application/json" data-for="htmlwidget-5d91b3d89c8059ef5915">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","-","-","-","-","-","-","-","-","-"],"Fixture":["Leeds 0-0 Burnley","Brentford 0-0 West Ham","Newcastle 0-0 Brighton","Wolves 0-0 Sunderland","Arsenal 0-0 Fulham","Bournemouth 0-0 Palace","Man Utd 0-0 Liverpool","Villa 0-0 Spurs","Chelsea 0-0 Forest","Everton 0-0 Man City"],"Away +1 Change":["-","-","-","-","-","-","-","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Score Next..","type":"character","html":true,"minWidth":100,"align":"left","style":{"background":"#252628"}},{"id":"Fixture","name":"Score","type":"character","minWidth":180,"maxWidth":200,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"13px","whiteSpace":"nowrap","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Score Next..","type":"character","html":true,"minWidth":100,"align":"right","style":{"background":"#252628"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"602727dbc1f1c0a3b0730f9e16d841a3"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+        <div class="reactable html-widget html-fill-item" id="htmlwidget-340cb898c4ac195417d2" style="width:auto;height:auto;"></div>
+        <script type="application/json" data-for="htmlwidget-340cb898c4ac195417d2">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","-","-","-","-","-","-","-","-","-"],"Fixture":["LEE 0-0 BUR","BRE 0-0 WHU","NEW 0-0 BHA","WOL 0-0 SUN","ARS 0-0 FUL","BOU 0-0 CRY","MNU 0-0 LIV","AVL 0-0 TOT","CHE 0-0 NFO","EVE 0-0 MNC"],"Away +1 Change":["-","-","-","-","-","-","-","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Scores..","type":"character","html":true,"minWidth":110,"align":"left","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}},{"id":"Fixture","name":"Score","type":"character","minWidth":75,"maxWidth":85,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"10px","whiteSpace":"nowrap","paddingLeft":"1px","paddingRight":"1px","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Scores..","type":"character","html":true,"minWidth":110,"align":"right","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"642dea77b360bba224937265a89d4440"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
       </div>
       <div class="div-section">
         <h2>Division 3</h2>
-        <div class="reactable html-widget html-fill-item" id="htmlwidget-50275fcf03fd5549482a" style="width:auto;height:auto;"></div>
-        <script type="application/json" data-for="htmlwidget-50275fcf03fd5549482a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","-","-","-","-","-","-","-","-","-"],"Fixture":["Leeds 0-0 Burnley","Brentford 0-0 West Ham","Newcastle 0-0 Brighton","Wolves 0-0 Sunderland","Arsenal 0-0 Fulham","Bournemouth 0-0 Palace","Man Utd 0-0 Liverpool","Villa 0-0 Spurs","Chelsea 0-0 Forest","Everton 0-0 Man City"],"Away +1 Change":["-","-","-","-","-","-","-","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Score Next..","type":"character","html":true,"minWidth":100,"align":"left","style":{"background":"#252628"}},{"id":"Fixture","name":"Score","type":"character","minWidth":180,"maxWidth":200,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"13px","whiteSpace":"nowrap","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Score Next..","type":"character","html":true,"minWidth":100,"align":"right","style":{"background":"#252628"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"602727dbc1f1c0a3b0730f9e16d841a3"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+        <div class="reactable html-widget html-fill-item" id="htmlwidget-6a2362a4be86787c2625" style="width:auto;height:auto;"></div>
+        <script type="application/json" data-for="htmlwidget-6a2362a4be86787c2625">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","-","-","-","-","-","-","-","-","-"],"Fixture":["LEE 0-0 BUR","BRE 0-0 WHU","NEW 0-0 BHA","WOL 0-0 SUN","ARS 0-0 FUL","BOU 0-0 CRY","MNU 0-0 LIV","AVL 0-0 TOT","CHE 0-0 NFO","EVE 0-0 MNC"],"Away +1 Change":["-","-","-","-","-","-","-","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Scores..","type":"character","html":true,"minWidth":110,"align":"left","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}},{"id":"Fixture","name":"Score","type":"character","minWidth":75,"maxWidth":85,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"10px","whiteSpace":"nowrap","paddingLeft":"1px","paddingRight":"1px","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Scores..","type":"character","html":true,"minWidth":110,"align":"right","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"642dea77b360bba224937265a89d4440"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
       </div>
       <div class="div-section">
         <h2>Division 4</h2>
-        <div class="reactable html-widget html-fill-item" id="htmlwidget-85033ecf33f6f61a5553" style="width:auto;height:auto;"></div>
-        <script type="application/json" data-for="htmlwidget-85033ecf33f6f61a5553">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","<span class='down'>Tom L loses top spot<\/span><br><span class='up'>Karla is Champion!<\/span>","-","<span class='down'>Tom L loses top spot<br><span class='suffix'> (on GD)<\/span><\/span><br><span class='up'>Karla is Champion!<br><span class='suffix'> (on GD)<\/span><\/span>","-","<span class='down'>Tom L loses top spot<\/span><br><span class='up'>Karla is Champion!<\/span>","-","<span class='down'>Tom L loses top spot<\/span><br><span class='up'>Matt is Champion!<\/span>","-","<span class='down'>Tom L loses top spot<\/span><br><span class='up'>Karla is Champion!<\/span>"],"Fixture":["Leeds 0-0 Burnley","Brentford 0-0 West Ham","Newcastle 0-0 Brighton","Wolves 0-0 Sunderland","Arsenal 0-0 Fulham","Bournemouth 0-0 Palace","Man Utd 0-0 Liverpool","Villa 0-0 Spurs","Chelsea 0-0 Forest","Everton 0-0 Man City"],"Away +1 Change":["-","-","-","-","-","<span class='down'>Tom L loses top spot<br><span class='suffix'> (on GD)<\/span><\/span><br><span class='up'>Karla is Champion!<br><span class='suffix'> (on GD)<\/span><\/span>","<span class='down'>Tom L loses top spot<br><span class='suffix'> (on GD)<\/span><\/span><br><span class='up'>Karla is Champion!<br><span class='suffix'> (on GD)<\/span><\/span>","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Score Next..","type":"character","html":true,"minWidth":100,"align":"left","style":{"background":"#252628"}},{"id":"Fixture","name":"Score","type":"character","minWidth":180,"maxWidth":200,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"13px","whiteSpace":"nowrap","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Score Next..","type":"character","html":true,"minWidth":100,"align":"right","style":{"background":"#252628"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"5c7c7acea9cc5ec68285cd3ce9aa1c25"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+        <div class="reactable html-widget html-fill-item" id="htmlwidget-68589c9afd2f8d7396ba" style="width:auto;height:auto;"></div>
+        <script type="application/json" data-for="htmlwidget-68589c9afd2f8d7396ba">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Home +1 Change":["-","<span class='down'>Tom L off the top<\/span><br><span class='up'>Karla is Champion!<\/span>","-","<span class='down'>Tom L off the top<br><span class='suffix'> (on GD)<\/span><\/span><br><span class='up'>Karla is Champion!<br><span class='suffix'> (on GD)<\/span><\/span>","-","<span class='down'>Tom L off the top<\/span><br><span class='up'>Karla is Champion!<\/span>","-","<span class='down'>Tom L off the top<\/span><br><span class='up'>Matt is Champion!<\/span>","-","<span class='down'>Tom L off the top<\/span><br><span class='up'>Karla is Champion!<\/span>"],"Fixture":["LEE 0-0 BUR","BRE 0-0 WHU","NEW 0-0 BHA","WOL 0-0 SUN","ARS 0-0 FUL","BOU 0-0 CRY","MNU 0-0 LIV","AVL 0-0 TOT","CHE 0-0 NFO","EVE 0-0 MNC"],"Away +1 Change":["-","-","-","-","-","<span class='down'>Tom L off the top<br><span class='suffix'> (on GD)<\/span><\/span><br><span class='up'>Karla is Champion!<br><span class='suffix'> (on GD)<\/span><\/span>","<span class='down'>Tom L off the top<br><span class='suffix'> (on GD)<\/span><\/span><br><span class='up'>Karla is Champion!<br><span class='suffix'> (on GD)<\/span><\/span>","-","-","-"]},"columns":[{"id":"Home +1 Change","name":"If Home Scores..","type":"character","html":true,"minWidth":110,"align":"left","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}},{"id":"Fixture","name":"Score","type":"character","minWidth":75,"maxWidth":85,"align":"center","style":{"background":"#252628","color":"#ffffff","fontWeight":"bold","fontSize":"10px","whiteSpace":"nowrap","paddingLeft":"1px","paddingRight":"1px","borderLeft":"1px solid #f0f0f0","borderRight":"1px solid #f0f0f0"}},{"id":"Away +1 Change","name":"If Away Scores..","type":"character","html":true,"minWidth":110,"align":"right","style":{"background":"#252628","whiteSpace":"nowrap","fontSize":"12px"}}],"pagination":false,"highlight":true,"theme":{"backgroundColor":"#1e1f21","borderColor":"#f0f0f0","stripedColor":"#2a2b2d","headerStyle":{"backgroundColor":"#1e1f21","color":"#ffdc55","borderBottom":"2px solid #f0f0f0"},"cellStyle":{"color":"#f0f0f0","borderBottom":"1px solid #f0f0f0"}},"dataKey":"f24b74bb2c18c91f1c5dc7b40a057157"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
       </div>
       <div class="footnote" style="text-align: center; color: #ffdc55; font-size: 0.8em; font-weight: 600; margin-top: 40px; padding: 20px; letter-spacing: 1px;">
-        DON'T FORGET... ALWAYS REFER TO 
+        DON'T FORGET ... TO ALWAYS REFER TO 
         <a href="https://preds.co.uk" style="color: #ffdc55; text-decoration: underline;">PREDS.CO.UK</a>
          FOR OFFICIAL RANKINGS
       </div>

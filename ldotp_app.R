@@ -143,23 +143,23 @@ check_major_changes <- function(live_st, scenario_st) {
       ),
       change_html = case_when(
         OldRank > 1 & NewRank == 1 ~ paste0("<span class='up'>", Predder, " is Champion!", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
-        OldRank == 1 & NewRank > 1 ~ paste0("<span class='down'>", Predder, " loses top spot", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        OldRank == 1 & NewRank > 1 ~ paste0("<span class='down'>", Predder, " off the top", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
         
         # Div 2 Promotion
-        (Div == 2 & OldRank > 3 & NewRank <= 3) ~ paste0("<span class='up'>", Predder, " is promoted", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
-        (Div == 2 & OldRank <= 3 & NewRank > 3) ~ paste0("<span class='down'>", Predder, " will stay down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div == 2 & OldRank > 3 & NewRank <= 3) ~ paste0("<span class='up'>", Predder, " goes up", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div == 2 & OldRank <= 3 & NewRank > 3) ~ paste0("<span class='down'>", Predder, " stays down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
         
         # Div 3 Promotion
-        (Div == 3 & OldRank > 4 & NewRank <= 4) ~ paste0("<span class='up'>", Predder, " is promoted", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
-        (Div == 3 & OldRank <= 4 & NewRank > 4) ~ paste0("<span class='down'>", Predder, " will stay down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div == 3 & OldRank > 4 & NewRank <= 4) ~ paste0("<span class='up'>", Predder, " goes up", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div == 3 & OldRank <= 4 & NewRank > 4) ~ paste0("<span class='down'>", Predder, " stays down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
         
         # Div 4 Promotion
-        (Div == 4 & OldRank > 5 & NewRank <= 5) ~ paste0("<span class='up'>", Predder, " is promoted", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
-        (Div == 4 & OldRank <= 5 & NewRank > 5) ~ paste0("<span class='down'>", Predder, " will stay down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div == 4 & OldRank > 5 & NewRank <= 5) ~ paste0("<span class='up'>", Predder, " goes up", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div == 4 & OldRank <= 5 & NewRank > 5) ~ paste0("<span class='down'>", Predder, " stays down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
         
         # Relegation
-        (Div <= 3 & OldRank < 15 & NewRank >= 15) ~ paste0("<span class='down'>", Predder, " will go down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
-        (Div <= 3 & OldRank >= 15 & NewRank < 15) ~ paste0("<span class='up'>", Predder, " will stay up", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div <= 3 & OldRank < 15 & NewRank >= 15) ~ paste0("<span class='down'>", Predder, " goes down", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
+        (Div <= 3 & OldRank >= 15 & NewRank < 15) ~ paste0("<span class='up'>", Predder, " stays up", if(suffix != "") paste0("<br><span class='suffix'>", suffix, "</span>") else "",         "</span>"),
         TRUE ~ NA_character_
       )
     ) |>
@@ -250,32 +250,43 @@ for(i in 1:1){
       columns = list(
         `Home +1 Change` = colDef(
           html = TRUE, 
-          name = "If Home Score Next..",
+          name = "If Home Scores..", # Slightly shorter for big fonts
           align = "left",
-          minWidth = 100,
-          style = list(background = "#252628")
+          minWidth = 110,
+          style = list(
+            background = "#252628",
+            whiteSpace = "nowrap",
+            fontSize = "12px"
+          )
         ),
         Fixture = colDef(
           name = "Score", 
           align = "center",
-          minWidth = 180,
-          maxWidth = 200, 
+          minWidth = 75,
+          maxWidth = 85, 
           style = list(
             background = "#252628", 
             color = "#ffffff",
             fontWeight = "bold", 
-            fontSize = "13px",
+            fontSize = "10px",
+            #fontFamily = "monospace",
             whiteSpace = "nowrap",
+            paddingLeft = "1px",
+            paddingRight = "1px",
             borderLeft = "1px solid #f0f0f0", 
             borderRight = "1px solid #f0f0f0"
           )
         ),
         `Away +1 Change` = colDef(
           html = TRUE, 
-          name = "If Away Score Next..", 
+          name = "If Away Scores..", 
           align = "right",
-          minWidth = 100,
-          style = list(background = "#252628")
+          minWidth = 110,
+          style = list(
+            background = "#252628",
+            whiteSpace = "nowrap", # Forces stay on one line
+            fontSize = "12px"
+          )
         )
       )
     )
@@ -286,68 +297,87 @@ for(i in 1:1){
     tags$head(
       tags$link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap", rel="stylesheet"),
       tags$meta(attributes = list("http-equiv" = "refresh", "content" = "60")),
+      tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0"),
       tags$title("Live Prediction Scenarios"),
       tags$style(HTML("
-      /* Desktop / General Styles */
-      body { 
-        font-family: 'Montserrat', sans-serif; 
-        background-color: #1e1f21; 
-        color: #f0f0f0; 
-        padding: 20px; 
-      }
-      .container { max-width: 900px; margin: auto; }
-      
-      /* Page Title - Now Mustard Yellow */
-      h1 { 
-        text-align: center; 
-        color: #ffdc55; 
-        font-weight: 800; 
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      
-      .footnote {
-        text-align: center;
-        color: #ffdc55; /* Mustard Yellow */
-        font-size: 0.8em;
-        font-weight: 600;
-        margin-top: 30px;
-        padding: 20px;
-        letter-spacing: 1px;
-        opacity: 0.8;
-      }
-      .footnote a {
-        color: #ffdc55;
-        text-decoration: underline;
-      }
-      
-      /* Division Text - Mustard Yellow with the Left Border */
-      h2 { 
-        color: #ffdc55; 
-        border-left: 5px solid #ffdc55; 
-        padding-left: 15px; 
-        text-transform: uppercase;
-        font-size: 1.4em;
-      }
-    
-      /* Pastel Green/Red for the 'Change' text */
-      .up { color: #afffba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
-      .down { color: #ffbaba; font-weight: bold; display: block; line-height: 1.1; margin-bottom: 5px; }
-      .suffix { display: block; font-size: 0.75em; font-weight: 400; font-style: italic; opacity: 0.7; }
-    
-      /* Mobile Styles (Portrait Mode) */
-      @media (max-width: 600px) {
-        body { padding: 5px; }
-        .container { width: 100%; }
-        h1 { font-size: 1.4em; }
-        h2 { font-size: 1.1em; padding-left: 10px; }
+          /* Desktop / General Styles */
+          body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #1e1f21; 
+            color: #f0f0f0; 
+            padding: 20px; 
+          }
+          .container { max-width: 900px; margin: auto; }
+          
+          h1 { 
+            text-align: center; 
+            color: #ffdc55; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 2em;
+          }
+          
+          .footnote {
+            text-align: center;
+            color: #ffdc55;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 30px;
+            padding: 20px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+          }
+          .footnote a { color: #ffdc55; text-decoration: underline; }
+          
+          h2 { 
+            color: #ffdc55; 
+            border-left: 5px solid #ffdc55; 
+            padding-left: 15px; 
+            text-transform: uppercase;
+            font-size: 1.5em;
+          }
         
-        /* Shrink the text inside the table cells for mobile */
-        .rt-td { 
-          padding: 4px 2px !important; 
-          font-size: 11px !important; 
-        }
-      }
+          .up { 
+            color: #afffba; 
+            font-weight: bold; 
+            display: block; 
+            line-height: 1.0;  /* Reduced from 1.1 */
+            margin-bottom: 0px; /* Removed the 5px gap */
+          }
+          .down { 
+            color: #ffbaba; 
+            font-weight: bold; 
+            display: block; 
+            line-height: 1.0;  /* Reduced from 1.1 */
+            margin-bottom: 0px; /* Removed the 5px gap */
+          }
+          .suffix { 
+            display: block; 
+            font-size: 0.75em; 
+            font-weight: 400; 
+            font-style: italic; 
+            opacity: 0.7; 
+            line-height: 1.0; 
+            margin-top: 2px;   /* Small controlled gap just for the suffix */
+          }
+        
+          /* Mobile Styles (Portrait Mode) */
+          @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { width: 100%; }
+            h1 { font-size: 1.6em; }
+            h2 { font-size: 1.3em; padding-left: 10px; }
+            
+            /* INCREASED font size for mobile readability */
+            .rt-td { 
+              padding: 6px 0px !important; /* Taller rows for easier reading */
+              font-size: 12px;   /* Larger text */
+            }
+            .rt-th {
+              font-size: 11px !important;
+            }
+          }
     "))
     ),
     tags$body(
@@ -385,7 +415,7 @@ for(i in 1:1){
                # The Single Footnote at the very bottom
                tags$div(class = "footnote",
                         style = "text-align: center; color: #ffdc55; font-size: 0.8em; font-weight: 600; margin-top: 40px; padding: 20px; letter-spacing: 1px;",
-                        "DON'T FORGET... ALWAYS REFER TO ",
+                        "DON'T FORGET ... TO ALWAYS REFER TO ",
                         tags$a(href = "https://preds.co.uk", style = "color: #ffdc55; text-decoration: underline;", "PREDS.CO.UK"),
                         " FOR OFFICIAL RANKINGS"
                )
@@ -396,16 +426,16 @@ for(i in 1:1){
   # --- 4. Save to File ---
   htmltools::save_html(page, file = "live.html", libdir = "lib")
 
-  try({
-    # The "." tells Git to look at EVERYTHING in the folder (html and lib)
-    system("git add .")
-
-    # Commit only if there are changes (avoids errors if nothing changed)
-    system('git commit -m "Auto-update scores" --no-verify')
-
-    # Push using our authenticated remote
-    system("git push origin main --quiet")
-  }, silent = FALSE)
+  # try({
+  #   # The "." tells Git to look at EVERYTHING in the folder (html and lib)
+  #   system("git add .")
+  # 
+  #   # Commit only if there are changes (avoids errors if nothing changed)
+  #   system('git commit -m "Auto-update scores" --no-verify')
+  # 
+  #   # Push using our authenticated remote
+  #   system("git push origin main --quiet")
+  # }, silent = FALSE)
 
   message(paste("Successfully updated at", Sys.time()))
 
