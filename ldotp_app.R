@@ -23,12 +23,23 @@ sheet_url <- "https://docs.google.com/spreadsheets/d/1eR_PDGFaZDEUcpilFB_qXmDxUl
 
 # --- 1. Scoring Function ---
 calculate_points <- function(pred, home_real, away_real) {
+  # Fix: If goals haven't been entered yet (NA), return 0 points immediately
+  if (is.na(home_real) || is.na(away_real)) {
+    return(0)
+  }
+  
   # Split the "2 - 1" string into numeric values
   p <- as.numeric(unlist(strsplit(as.character(pred), " - ")))
+  
+  # Safety check: if prediction is missing, return 0
+  if (length(p) < 2 || any(is.na(p))) {
+    return(0)
+  }
+  
   p_h <- p[1]
   p_a <- p[2]
   
-  # Logic: 3 for exact score, 1 for correct result (win/loss/draw)
+  # Logic: 3 for exact score, 1 for correct result
   if (p_h == home_real && p_a == away_real) {
     return(3)
   } else if (sign(p_h - p_a) == sign(home_real - away_real)) {
@@ -186,20 +197,17 @@ my_theme <- reactableTheme(
   )
 )
 
-#while(TRUE){
-for(i in 1:1){
+while(TRUE){
+#for(i in 1:1){
   message(paste("Updating at", Sys.time()))
   
-  # read fresh data from sheet_url
   fixture_data <- read_sheet(sheet_url, sheet = "Fixtures")
   predictions_data <- read_sheet(sheet_url, sheet = "Preds", range = "Preds!B:F")
   table_data <- read_sheet(sheet_url, sheet = "PenultimateTable")
   
-  
-  # --- Main Scenario Loop ---
   division_reports <- list()
   
-  # 1. Get the "Current" state and extract the table
+  # 1. Get the "Live" state
   live_full_data <- get_standings(table_data, predictions_data, fixture_data)
   live_standings <- live_full_data$table 
   
@@ -209,84 +217,85 @@ for(i in 1:1){
     
     for (i in 1:nrow(fixture_data)) {
       curr_fix <- fixture_data[i, ]
+      status <- curr_fix$Status  # TKO, Live, or FT
       
-      # --- Scenario: Home + 1 ---
-      fix_h1 <- fixture_data
-      fix_h1$HomeGoals[i] <- fix_h1$HomeGoals[i] + 1
-      res_h1 <- get_standings(table_data, predictions_data, fix_h1)
-      st_h1  <- filter(res_h1$table, Div == d) # Extract table for current Div
+      # Determine text for the side columns
+      if (status == "FT") {
+        h1_text <- "<span style='opacity:0.5; font-size:10px;'>FULL TIME</span>"
+        a1_text <- "<span style='opacity:0.5; font-size:10px;'>FULL TIME</span>"
+        fix_display <- paste0(curr_fix$HomeTeam, " ", curr_fix$HomeGoals, "-", curr_fix$AwayGoals, " ", curr_fix$AwayTeam)
+        
+      } else if (status == "TKO") {
+        h1_text <- "-"
+        a1_text <- "-"
+        # Show "v" instead of "0-0" for games yet to start
+        fix_display <- paste0(curr_fix$HomeTeam, " v ", curr_fix$AwayTeam)
+        
+      } else {
+        # LIVE LOGIC: Calculate scenarios as normal
+        fix_h1 <- fixture_data
+        fix_h1$HomeGoals[i] <- fix_h1$HomeGoals[i] + 1
+        st_h1  <- filter(get_standings(table_data, predictions_data, fix_h1)$table, Div == d)
+        
+        fix_a1 <- fixture_data
+        fix_a1$AwayGoals[i] <- fix_a1$AwayGoals[i] + 1
+        st_a1  <- filter(get_standings(table_data, predictions_data, fix_a1)$table, Div == d)
+        
+        h1_text <- check_major_changes(div_live, st_h1)
+        a1_text <- check_major_changes(div_live, st_a1)
+        fix_display <- paste0(curr_fix$HomeTeam, " ", curr_fix$HomeGoals, "-", curr_fix$AwayGoals, " ", curr_fix$AwayTeam)
+      }
       
-      # --- Scenario: Away + 1 ---
-      fix_a1 <- fixture_data
-      fix_a1$AwayGoals[i] <- fix_a1$AwayGoals[i] + 1
-      res_a1 <- get_standings(table_data, predictions_data, fix_a1)
-      st_a1  <- filter(res_a1$table, Div == d) # Extract table for current Div
-      
-      # --- Build Row ---
       div_report <- rbind(div_report, data.frame(
-        `Home +1 Change` = check_major_changes(div_live, st_h1),
-        Fixture = paste0(curr_fix$HomeTeam, " ", curr_fix$HomeGoals, "-", curr_fix$AwayGoals, " ", curr_fix$AwayTeam),
-        `Away +1 Change` = check_major_changes(div_live, st_a1),
+        `Home +1 Change` = h1_text,
+        Fixture = fix_display,
+        `Away +1 Change` = a1_text,
+        Status = status, # Kept for row styling
         check.names = FALSE
       ))
-      
-      # OPTIONAL: Debugging checkpoint
-      # If you want to see the math for a specific scenario, you can assign 
-      # the 'logic' or 'weekly' pieces to the global environment here:
-      interim_logic_check <<- res_h1$logic
     }
-    
     division_reports[[paste0("Div", d)]] <- div_report
   }
   
-
-  # --- 2. Create a function for the styled Reactable ---
+  # --- Updated Reactable Function with Row Styling ---
   create_scenario_table <- function(data) {
     reactable(
       data,
       pagination = FALSE,
       highlight = TRUE,
       theme = my_theme, 
+      # Logic to dim finished games
+      rowStyle = function(index) {
+        if (data$Status[index] == "FT") {
+          list(background = "#141415", opacity = 0.7) 
+        }
+      },
       columns = list(
+        Status = colDef(show = FALSE), # Hide the status helper column
         `Home +1 Change` = colDef(
           html = TRUE, 
-          name = "If Home Scores..", # Slightly shorter for big fonts
+          name = "If Home Score..",
           align = "left",
           minWidth = 110,
-          style = list(
-            background = "#252628",
-            whiteSpace = "nowrap",
-            fontSize = "12px"
-          )
+          style = list(background = "inherit", whiteSpace = "nowrap", fontSize = "12px")
         ),
         Fixture = colDef(
           name = "Score", 
           align = "center",
-          minWidth = 75,
-          maxWidth = 85, 
+          minWidth = 85,
+          maxWidth = 100, 
           style = list(
-            background = "#252628", 
-            color = "#ffffff",
-            fontWeight = "bold", 
-            fontSize = "10px",
-            #fontFamily = "monospace",
-            whiteSpace = "nowrap",
-            paddingLeft = "1px",
-            paddingRight = "1px",
-            borderLeft = "1px solid #f0f0f0", 
-            borderRight = "1px solid #f0f0f0"
+            background = "#252628", color = "#ffffff", fontWeight = "bold", 
+            fontSize = "12px", whiteSpace = "nowrap",
+            borderLeft = "1px solid #f0f0f0", borderRight = "1px solid #f0f0f0"
           )
         ),
         `Away +1 Change` = colDef(
           html = TRUE, 
-          name = "If Away Scores..", 
+          name = "If Away Score..", 
           align = "right",
           minWidth = 110,
-          style = list(
-            background = "#252628",
-            whiteSpace = "nowrap", # Forces stay on one line
-            fontSize = "12px"
-          )
+          style = list(background = "inherit", whiteSpace = "nowrap", fontSize = "12px")
         )
       )
     )
@@ -426,16 +435,16 @@ for(i in 1:1){
   # --- 4. Save to File ---
   htmltools::save_html(page, file = "live.html", libdir = "lib")
 
-  # try({
-  #   # The "." tells Git to look at EVERYTHING in the folder (html and lib)
-  #   system("git add .")
-  # 
-  #   # Commit only if there are changes (avoids errors if nothing changed)
-  #   system('git commit -m "Auto-update scores" --no-verify')
-  # 
-  #   # Push using our authenticated remote
-  #   system("git push origin main --quiet")
-  # }, silent = FALSE)
+  try({
+    # The "." tells Git to look at EVERYTHING in the folder (html and lib)
+    system("git add .")
+
+    # Commit only if there are changes (avoids errors if nothing changed)
+    system('git commit -m "Auto-update scores" --no-verify')
+
+    # Push using our authenticated remote
+    system("git push origin main --quiet")
+  }, silent = FALSE)
 
   message(paste("Successfully updated at", Sys.time()))
 
