@@ -197,12 +197,12 @@ my_theme <- reactableTheme(
   )
 )
 
-while(TRUE){
-#for(i in 1:1){
+#while(TRUE){
+for(i in 1:1){
   message(paste("Updating at", Sys.time()))
   
   fixture_data <- read_sheet(sheet_url, sheet = "Fixtures")
-  predictions_data <- read_sheet(sheet_url, sheet = "Preds", range = "Preds!B:F")
+  predictions_data <- read_sheet(sheet_url, sheet = "Preds8", range = "Preds8!B:F")
   table_data <- read_sheet(sheet_url, sheet = "PenultimateTable")
   
   division_reports <- list()
