@@ -267,7 +267,7 @@ for(i in 1:1){
       # Logic to dim finished games
       rowStyle = function(index) {
         if (data$Status[index] == "FT") {
-          list(background = "#ffdc55", color = "#141415", opacity = 0.7) 
+          list(background = "#141415", opacity = 0.7) 
         }
       },
       columns = list(
