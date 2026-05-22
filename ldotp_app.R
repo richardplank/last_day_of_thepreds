@@ -197,12 +197,12 @@ my_theme <- reactableTheme(
   )
 )
 
-while(TRUE){
-#for(i in 1:1){
+#while(TRUE){
+for(i in 1:1){
   message(paste("Updating at", Sys.time()))
   
   fixture_data <- read_sheet(sheet_url, sheet = "Fixtures")
-  predictions_data <- read_sheet(sheet_url, sheet = "Preds8", range = "Preds8!B:F")
+  predictions_data <- read_sheet(sheet_url, sheet = "Preds", range = "Preds!B:F")
   table_data <- read_sheet(sheet_url, sheet = "PenultimateTable")
   
   division_reports <- list()
@@ -267,7 +267,7 @@ while(TRUE){
       # Logic to dim finished games
       rowStyle = function(index) {
         if (data$Status[index] == "FT") {
-          list(background = "#141415", opacity = 0.7) 
+          list(background = "#ffdc55", color = "#141415", opacity = 0.7) 
         }
       },
       columns = list(
