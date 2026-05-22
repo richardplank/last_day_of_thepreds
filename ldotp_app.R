@@ -197,8 +197,8 @@ my_theme <- reactableTheme(
   )
 )
 
-#while(TRUE){
-for(i in 1:1){
+while(TRUE){
+#for(i in 1:1){
   message(paste("Updating at", Sys.time()))
   
   fixture_data <- read_sheet(sheet_url, sheet = "Fixtures")
@@ -221,25 +221,25 @@ for(i in 1:1){
       
       # Determine text for the side columns
       if (status == "FT") {
-        h1_text <- "<span style='opacity:0.5; font-size:10px;'>FULL TIME</span>"
-        a1_text <- "<span style='opacity:0.5; font-size:10px;'>FULL TIME</span>"
+        # Updated: Changed text color to your signature yellow (#ffdc55) while keeping 0.5 opacity
+        h1_text <- "<span style='color:#ffdc55; opacity:0.5; font-size:10px;'>FULL TIME</span>"
+        a1_text <- "<span style='color:#ffdc55; opacity:0.5; font-size:10px;'>FULL TIME</span>"
         fix_display <- paste0(curr_fix$HomeTeam, " ", curr_fix$HomeGoals, "-", curr_fix$AwayGoals, " ", curr_fix$AwayTeam)
         
       } else if (status == "TKO") {
         h1_text <- "-"
         a1_text <- "-"
-        # Show "v" instead of "0-0" for games yet to start
         fix_display <- paste0(curr_fix$HomeTeam, " v ", curr_fix$AwayTeam)
         
       } else {
         # LIVE LOGIC: Calculate scenarios as normal
         fix_h1 <- fixture_data
         fix_h1$HomeGoals[i] <- fix_h1$HomeGoals[i] + 1
-        st_h1  <- filter(get_standings(table_data, predictions_data, fix_h1)$table, Div == d)
+        st_h1  = filter(get_standings(table_data, predictions_data, fix_h1)$table, Div == d)
         
         fix_a1 <- fixture_data
         fix_a1$AwayGoals[i] <- fix_a1$AwayGoals[i] + 1
-        st_a1  <- filter(get_standings(table_data, predictions_data, fix_a1)$table, Div == d)
+        st_a1  = filter(get_standings(table_data, predictions_data, fix_a1)$table, Div == d)
         
         h1_text <- check_major_changes(div_live, st_h1)
         a1_text <- check_major_changes(div_live, st_a1)
@@ -257,14 +257,14 @@ for(i in 1:1){
     division_reports[[paste0("Div", d)]] <- div_report
   }
   
-  # --- Updated Reactable Function with Row Styling ---
+  # --- Updated Reactable Function with Row & Column Conditional Styling ---
   create_scenario_table <- function(data) {
     reactable(
       data,
       pagination = FALSE,
       highlight = TRUE,
       theme = my_theme, 
-      # Logic to dim finished games
+      # Logic to dim finished rows
       rowStyle = function(index) {
         if (data$Status[index] == "FT") {
           list(background = "#141415", opacity = 0.7) 
@@ -284,11 +284,22 @@ for(i in 1:1){
           align = "center",
           minWidth = 85,
           maxWidth = 100, 
-          style = list(
-            background = "#252628", color = "#ffffff", fontWeight = "bold", 
-            fontSize = "12px", whiteSpace = "nowrap",
-            borderLeft = "1px solid #f0f0f0", borderRight = "1px solid #f0f0f0"
-          )
+          # Updated: Evaluates row by row to change background and text when FT
+          style = function(value, index) {
+            if (data$Status[index] == "FT") {
+              list(
+                background = "#ffdc55", color = "#000000", fontWeight = "bold", 
+                fontSize = "12px", whiteSpace = "nowrap",
+                borderLeft = "1px solid #f0f0f0", borderRight = "1px solid #f0f0f0"
+              )
+            } else {
+              list(
+                background = "#252628", color = "#ffffff", fontWeight = "bold", 
+                fontSize = "12px", whiteSpace = "nowrap",
+                borderLeft = "1px solid #f0f0f0", borderRight = "1px solid #f0f0f0"
+              )
+            }
+          }
         ),
         `Away +1 Change` = colDef(
           html = TRUE, 
@@ -301,7 +312,6 @@ for(i in 1:1){
     )
   }
   # --- 3. Build the HTML Page Structure ---
-  # We use tags$div and tags$h2 to create a clean, modern layout
   page <- tags$html(
     tags$head(
       tags$link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap", rel="stylesheet"),
@@ -351,15 +361,15 @@ for(i in 1:1){
             color: #afffba; 
             font-weight: bold; 
             display: block; 
-            line-height: 1.0;  /* Reduced from 1.1 */
-            margin-bottom: 0px; /* Removed the 5px gap */
+            line-height: 1.0;  
+            margin-bottom: 0px; 
           }
           .down { 
             color: #ffbaba; 
             font-weight: bold; 
             display: block; 
-            line-height: 1.0;  /* Reduced from 1.1 */
-            margin-bottom: 0px; /* Removed the 5px gap */
+            line-height: 1.0;  
+            margin-bottom: 0px; 
           }
           .suffix { 
             display: block; 
@@ -368,7 +378,7 @@ for(i in 1:1){
             font-style: italic; 
             opacity: 0.7; 
             line-height: 1.0; 
-            margin-top: 2px;   /* Small controlled gap just for the suffix */
+            margin-top: 2px;   
           }
         
           /* Mobile Styles (Portrait Mode) */
@@ -378,10 +388,9 @@ for(i in 1:1){
             h1 { font-size: 1.6em; }
             h2 { font-size: 1.3em; padding-left: 10px; }
             
-            /* INCREASED font size for mobile readability */
             .rt-td { 
-              padding: 6px 0px !important; /* Taller rows for easier reading */
-              font-size: 12px;   /* Larger text */
+              padding: 6px 0px !important; 
+              font-size: 12px;   
             }
             .rt-th {
               font-size: 11px !important;
@@ -391,7 +400,6 @@ for(i in 1:1){
     ),
     tags$body(
       tags$div(class = "container",
-               # Title and Timestamp
                tags$h1("Last Day of The Preds"),
                tags$p(class = "update-time", 
                       style = "text-align: center; font-size: 0.9em; opacity: 0.8;", 
@@ -434,23 +442,15 @@ for(i in 1:1){
   
   # --- 4. Save to File ---
   htmltools::save_html(page, file = "live.html", libdir = "lib")
-
+  
   try({
-    # The "." tells Git to look at EVERYTHING in the folder (html and lib)
     system("git add .")
-
-    # Commit only if there are changes (avoids errors if nothing changed)
     system('git commit -m "Auto-update scores" --no-verify')
-
-    # Push using our authenticated remote
     system("git push origin main --quiet")
   }, silent = FALSE)
-
+  
   message(paste("Successfully updated at", Sys.time()))
-
-  # check the sheet every 60 seconds
   Sys.sleep(90)
-
 }
 
 
