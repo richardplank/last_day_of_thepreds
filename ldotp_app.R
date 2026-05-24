@@ -318,6 +318,30 @@ while(TRUE){
       tags$meta(attributes = list("http-equiv" = "refresh", "content" = "60")),
       tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0"),
       tags$title("Live Prediction Scenarios"),
+      
+      # Tiny JS script that watches for page updates without forcing a blind timer
+      tags$script(HTML("
+        let initialModified = null;
+        async function checkUpdate() {
+          try {
+            // Fetch headers of the current page to check the 'Last-Modified' timestamp
+            const response = await fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' });
+            const lastModified = response.headers.get('Last-Modified');
+            
+            if (!initialModified) {
+              initialModified = lastModified;
+            } else if (lastModified && lastModified !== initialModified) {
+              // Only reload if the file on the server has actually been updated!
+              window.location.reload();
+            }
+          } catch (e) {
+            console.log('Update check failed', e);
+          }
+        }
+        // Check the server for a fresh git deployment every 15 seconds
+        setInterval(checkUpdate, 15000);
+      ")),
+      
       tags$style(HTML("
           /* Desktop / General Styles */
           body { 
